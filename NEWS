@@ -1,0 +1,51 @@
+Development
+===========
+
++ Fixed #1: unique fields are unique only per language in translation models
++ Added admin mixin to ease formset management for translation inlines
+
+2013-06-07: 0.0.7
+=================
+
++ Added get_by_lang manager method
++ Use get_by_lang in translate tag
++ No longer includes default language in choices for translations
+
+2013-06-05: 0.0.6
+=================
+
++ Added translate_url tag
+
+2013-06-04: 0.0.5
+=================
+
++ Fixed bug in translation model's __unicode__ method
+
+2013-06-03: 0.0.4
+=================
+
++ Fixed unique_together being lost after changes introduced in 0.0.2, when
+  subclass has its own Meta options
+
+2013-06-02: 0.0.3
+=================
+
++ Deprecated current_language manager method
++ Added lang manager method for retrieving current-language and other
+  translations
++ Added ``{% translate %}`` template tag
+
+2013-06-01: 0.0.2
+=================
+
++ Relay Meta options to superclass
+
+2013-06-01: 0.0.1
+=================
+
++ Basic working version
+
+2013-06-01: Published the code online
+=====================================
+
++ The first untested version with unit tests.
