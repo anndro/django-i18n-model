@@ -3,12 +3,12 @@ from __future__ import unicode_literals
 from django.template import Library
 from django.conf import settings
 from django.utils.translation import get_language, override
-from django.core.urlresolvers import reverse, resolve
+from django.urls import reverse, resolve
 
 register = Library()
 
 
-@register.assignment_tag
+@register.simple_tag
 def translate(obj, language=None):
     language = language or get_language()
 

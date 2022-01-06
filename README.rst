@@ -2,6 +2,8 @@
 django-i18n-model
 =================
 
+This project is forked from https://pypi.org/project/django-i18n-model/ and changed to work Django 4.0
+
 Adding translations to Django models is a topic that has been discussed from a
 vast variety of angles, and yet still not very well defined. django-i18n-model
 is yet another solution for adding i18n to your models.

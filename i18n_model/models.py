@@ -4,8 +4,9 @@ from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
 from django.db import models
 from django.db.models.base import ModelBase, Model
-from django.db.models.loading import get_model
-from django.utils.translation import ugettext_lazy as _
+from django.db.models import CASCADE
+from django.apps import apps
+from django.utils.translation import gettext as _
 from django.utils.translation import get_language
 
 
@@ -94,14 +95,14 @@ class I18nBase(ModelBase):
         except AttributeError:
             pass
 
-        if source and type(source) in [str, unicode]:
+        if source and type(source) in [str]:
             # The source is a string, so we need to find out what the developer
             # meant by that. Possibly a class or a model.
 
             if '.' in source:
                 # There's a dot in the name, so this is a model name in
                 # ``app.Model`` format, most likely.
-                source = get_model(source.split('.')[0],
+                source = apps.get_model(source.split('.')[0],
                                    source.split('.')[1])
 
             else:
@@ -160,7 +161,7 @@ class I18nBase(ModelBase):
 
         # Add unique_together to Meta
         if hasattr(attr_meta, 'unique_together'):
-            if type(attrs['Meta'].unique_together[0]) in (str, unicode):
+            if type(attrs['Meta'].unique_together[0]) in (str):
                 attrs['Meta'].unique_together = (
                     attrs['Meta'].unique_together,
                     ('i18n_source', 'i18n_language'))
@@ -179,12 +180,13 @@ class I18nBase(ModelBase):
         attrs['i18n_source'] = models.ForeignKey(source,
                                                  related_name='translations',
                                                  editable=False,
-                                                 verbose_name=_('source'))
+                                                 verbose_name=_('source'),
+                                                 on_delete=CASCADE)
 
         return ModelBase.__new__(mcs, name, bases, attrs)
 
 
-class I18nModel(Model):
+class I18nModel(Model, metaclass=I18nBase):
     """ Translatable model
 
     To translate any of your Django models, you need to create a translation
